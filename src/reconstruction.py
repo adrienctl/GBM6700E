@@ -22,7 +22,6 @@ def reconstruction_all_beads(param_P0, param_P20,mat2D_P0,mat2D_P20):
     R = []
     for i in range(len(mat2D_P0)):
         for k in range(len(mat2D_P20)):
-            print(mat2D_P0[i][0],mat2D_P20[k][0])
             if mat2D_P0[i][0] == mat2D_P20[k][0]:
                 R.append(reconstruction_one_point(param_P0, param_P20,mat2D_P0[i][1][0],mat2D_P20[k][1][0]))
     return np.array(R)
