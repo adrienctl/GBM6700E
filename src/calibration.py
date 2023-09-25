@@ -74,7 +74,6 @@ def print_parameters(M):
     R33 = d*L[10]
     R = np.array([[R11,R12,R13],[R21,R22,R23],[R31,R32,R33]])
 
-
     print("____________________________________________________________________________")
     print("Paramètres intrinsèques de la caméra :")
     print("(u0,v0) = ({0:.2f},{1:.2f})".format(u0,v0))
