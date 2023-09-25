@@ -30,7 +30,7 @@ def reconstruction_vertebrae(param_P0, param_P20,mat2D_P0,mat2D_P20):
     R = []
     for i in range(len(mat2D_P0)):
         for k in range(len(mat2D_P20)):
-            if mat2D_P0[i][0][0] == mat2D_P20[k][0][0]: #tester si les noms sont les mm
+            if mat2D_P0[i][0][0] == mat2D_P20[k][0][0]: #tester si les noms sont les memes
                 p_P0 = mat2D_P0[i][0][1][0]
                 p_P20 = mat2D_P20[k][0][1][0]
                 for j in range(6):
