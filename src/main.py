@@ -22,7 +22,7 @@ def main():
     print("### Début de la reconstruction 3D ###\n")
 
     Beads2D_vert_PA0, Beads2D_vert_PA20 = lecture_ecriture.load_vert_2D("data/Vertebrae2D.mat")
-    vert_3D = reconstruction.reconstruction_vertebrae(Beads2D_vert_PA0,param_camera_PA0)
+    vert_3D = reconstruction.reconstruction_vertebrae(param_camera_PA0,param_camera_PA20,Beads2D_vert_PA0,Beads2D_vert_PA20)
 
     fin_reconstr_time = time.time()
     print("Fin de la reconstruction 3D, éxécutée en {0:.2f} secondes.\n".format(fin_reconstr_time-fin_calib_time))
