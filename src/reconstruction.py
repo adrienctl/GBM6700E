@@ -20,7 +20,7 @@ def reconstruction_one_point(param_P0, param_P20, coord_P0,coord_P20):
 
 def reconstruction_all_beads(param_P0, param_P20,mat2D_P0,mat2D_P20):
     R = []
-    for i in range(len(mat2D_P0)):
+    for i in range((min(len(mat2D_P0),len(mat2D_P20)))):
         R.append(reconstruction_one_point(param_P0, param_P20,mat2D_P0[i][1][0],mat2D_P20[i][1][0]))
     return np.array(R)
 

@@ -23,10 +23,11 @@ def main():
 
     Beads2D_vert_PA0, Beads2D_vert_PA20 = lecture_ecriture.load_vert_2D("data/Vertebrae2D.mat")
     vert_3D = reconstruction.reconstruction_vertebrae(param_camera_PA0,param_camera_PA20,Beads2D_vert_PA0,Beads2D_vert_PA20)
-
+    calib_3D_test = reconstruction.reconstruction_all_beads(param_camera_PA0,param_camera_PA20,Beads2D_calib_PA0,Beads2D_calib_PA20)
     fin_reconstr_time = time.time()
     print("Fin de la reconstruction 3D, éxécutée en {0:.2f} secondes.\n".format(fin_reconstr_time-fin_calib_time))
-    affichage.plot_3D_points(vert_3D)
+    affichage.plot_3D_points(vert_3D,"Vertebrae reconstruction")
+    affichage.plot_3D_points(calib_3D_test,"Beads reconstruction")
 
     print("Utilisation de l'affichage pendant {0:.2f} secondes.\n".format(time.time()-fin_reconstr_time))
 

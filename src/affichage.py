@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
-def plot_3D_points(mat3D):
-    fig = plt.figure()
+def plot_3D_points(mat3D,name):
+    fig = plt.figure(name)
     ax = fig.add_subplot(111, projection='3d')
     for line in mat3D:
         ax.scatter(line[0],line[1],line[2],c='b',marker='o')
