@@ -10,11 +10,19 @@ def reconstruction_one_point(param_P0, param_P20, coord_P0,coord_P20):
     A.append([coord_P0[0]*param_P0[4]-coord_P0[1]*param_P0[0],
             coord_P0[0]*param_P0[5]-coord_P0[1]*param_P0[1],
             coord_P0[0]*param_P0[6]-coord_P0[1]*param_P0[2]])
+    A.append([param_P0[8]*(coord_P0[0]+coord_P0[1])-param_P0[1]-param_P0[4],
+              param_P0[9]*(coord_P0[0]+coord_P0[1])-param_P0[2]-param_P0[5],
+              param_P0[10]*(coord_P0[0]+coord_P0[1])-param_P0[3]-param_P0[6]])
     B.append([param_P0[3]*coord_P0[1]-param_P0[7]*coord_P0[0]])
+    B.append([coord_P0[0]+coord_P0[1]+param_P0[3]+param_P0[7]])
     A.append([coord_P20[0]*param_P20[4]-coord_P20[1]*param_P20[0],
             coord_P20[0]*param_P20[5]-coord_P20[1]*param_P20[1],
             coord_P20[0]*param_P20[6]-coord_P20[1]*param_P20[2]])
+    A.append([param_P20[8]*(coord_P20[0]+coord_P20[1])-param_P20[1]-param_P20[4],
+              param_P20[9]*(coord_P20[0]+coord_P20[1])-param_P20[2]-param_P20[5],
+              param_P20[10]*(coord_P20[0]+coord_P20[1])-param_P20[3]-param_P20[6]])
     B.append([param_P20[3]*coord_P20[1]-param_P20[7]*coord_P20[0]])
+    B.append([coord_P20[0]+coord_P20[1]+param_P20[3]+param_P20[7]])
     XYZ,_,_,_ = np.linalg.lstsq(A, B, rcond=None)
     return np.array(XYZ)
 
