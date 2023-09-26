@@ -7,6 +7,7 @@ def reconstruction_one_point(param_P0, param_P20, coord_P0,coord_P20):
     param_P20 = np.array(param_P20).flatten()
     A = []
     B = []
+    """
     #Ici on a fait le rapport, on utilise pas certains param, je pense qu'on perd de l'info
     A.append([coord_P0[0]*param_P0[4]-coord_P0[1]*param_P0[0],
             coord_P0[0]*param_P0[5]-coord_P0[1]*param_P0[1],
@@ -16,7 +17,8 @@ def reconstruction_one_point(param_P0, param_P20, coord_P0,coord_P20):
             coord_P20[0]*param_P20[5]-coord_P20[1]*param_P20[1],
             coord_P20[0]*param_P20[6]-coord_P20[1]*param_P20[2]])
     B.append([param_P20[3]*coord_P20[1]-param_P20[7]*coord_P20[0]])
-
+    """
+    
     A.append([param_P0[8]*(coord_P0[0]+coord_P0[1])-param_P0[1]-param_P0[4],
               param_P0[9]*(coord_P0[0]+coord_P0[1])-param_P0[2]-param_P0[5],
               param_P0[10]*(coord_P0[0]+coord_P0[1])-param_P0[3]-param_P0[6]])
@@ -35,7 +37,6 @@ def reconstruction_one_point(param_P0, param_P20, coord_P0,coord_P20):
               param_P20[10]*(coord_P20[0]-coord_P20[1])-param_P20[3]+param_P20[6]])
     B.append([-coord_P20[0]+coord_P20[1]+param_P20[3]-param_P20[7]])
 
-
     XYZ,_,_,_ = np.linalg.lstsq(A, B, rcond=None)
     return np.array(XYZ)
 
@@ -43,7 +44,7 @@ def reconstruction_all_beads(param_P0, param_P20,mat2D_P0,mat2D_P20):
     R = []
     for i in range(len(mat2D_P0)):
         for k in range(len(mat2D_P20)):
-            if mat2D_P0[i][0] == mat2D_P20[k][0]:
+            if mat2D_P0[i][0] == mat2D_P20[k][0]: #tester si les noms sont les memes
                 R.append(reconstruction_one_point(param_P0, param_P20,mat2D_P0[i][1][0],mat2D_P20[k][1][0]))
     return np.array(R)
 
@@ -59,8 +60,6 @@ def reconstruction_vertebrae(param_P0, param_P20,mat2D_P0,mat2D_P20):
                     pts_P20 = p_P20[j][1][0]
                     R.append(reconstruction_one_point(param_P0, param_P20,pts_P0,pts_P20))
     return np.array(R)
-
-
 
 
 def reconstruction_all_beads_old(mat2D, M):
