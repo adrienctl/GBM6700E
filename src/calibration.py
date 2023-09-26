@@ -6,30 +6,18 @@ def create_equations(mat2D,mat3D):
     for line3D in mat3D:
         for line2D in mat2D:
             if line2D[0]==line3D[0]:
-                A.append([line3D[1][0][0],
-                          line3D[1][0][1],
-                          line3D[1][0][2],
-                          1,
-                          0,
-                          0,
-                          0,
-                          0,
-                          -line2D[1][0][0]*line3D[1][0][0],
-                          -line2D[1][0][0]*line3D[1][0][1],
-                          -line2D[1][0][0]*line3D[1][0][2]])
-                B.append([line2D[1][0][0]])
-                A.append([0,
-                          0,
-                          0,
-                          0,
-                          line3D[1][0][0],
-                          line3D[1][0][1],
-                          line3D[1][0][2],
-                          1,
-                          -line2D[1][0][1]*line3D[1][0][0],
-                          -line2D[1][0][1]*line3D[1][0][1],
-                          -line2D[1][0][1]*line3D[1][0][2]])
-                B.append([line2D[1][0][1]])
+                X,Y,Z = line3D[1][0][0],line3D[1][0][1],line3D[1][0][2]
+                u,v = line2D[1][0][0],line2D[1][0][1]
+                """
+                A.append([X,Y,Z,1,0,0,0,0,-u*X,-u*Y,-u*Z])
+                B.append([u])
+                A.append([0,0,0,0,X,Y,Z,1,-v*X,-v*Y,-v*Z])
+                B.append([v])
+                """
+                A.append([-X,-Y,-Z,-1,-X,-Y,-Z,-1,X*(u+v),Y*(u+v),Z*(u+v)])
+                B.append([-u-v])
+                A.append([-X,-Y,-Z,-1,X,Y,Z,1,X*(u-v),Y*(u-v),Z*(u-v)])
+                B.append([-u+v])
     return np.array(A),np.array(B)
     
 
