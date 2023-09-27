@@ -8,15 +8,16 @@ def main():
     print("### Début de la calibration des cameras ###\n")
     start_time = time.time()
 
+    nb_beads_calibration_max = 1
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
     param_camera_PA0 = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib)
     param_camera_PA20 = calibration.compute_camera_parameters(Beads2D_calib_PA20,Beads3D_calib)
 
     print("\nParamètres de la caméra PA0 :")
-    calibration.print_parameters(calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib))
+    calibration.print_parameters(calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib,nb_beads_calibration_max))
     print("\nParamètres de la caméra PA20 :")
-    calibration.print_parameters(calibration.compute_camera_parameters(Beads2D_calib_PA20,Beads3D_calib))
+    calibration.print_parameters(calibration.compute_camera_parameters(Beads2D_calib_PA20,Beads3D_calib,nb_beads_calibration_max))
     fin_calib_time = time.time()
     print("Fin de la calibration des cameras, éxécutée en {0:.2f} secondes.\n".format(fin_calib_time-start_time))
     print("### Début de la reconstruction 3D ###\n")
