@@ -38,7 +38,7 @@ def reconstruction_one_point(param_P0, param_P20, coord_P0,coord_P20):
     B.append([-coord_P20[0]+coord_P20[1]+param_P20[3]-param_P20[7]])
 
     XYZ,_,_,_ = np.linalg.lstsq(A, B, rcond=None)
-    return np.array(XYZ)
+    return XYZ.flatten()
 
 def reconstruction_all_beads(param_P0, param_P20,mat2D_P0,mat2D_P20):
     R = []
@@ -60,6 +60,11 @@ def reconstruction_vertebrae(param_P0, param_P20,mat2D_P0,mat2D_P20):
                     pts_P20 = p_P20[j][1][0]
                     R.append(reconstruction_one_point(param_P0, param_P20,pts_P0,pts_P20))
     return np.array(R)
+
+
+
+
+
 
 
 def reconstruction_all_beads_old(mat2D, M):

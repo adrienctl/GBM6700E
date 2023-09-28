@@ -4,7 +4,7 @@ def plot_3D_points(mat3D,name):
     fig = plt.figure(name)
     ax = fig.add_subplot(111, projection='3d')
     for line in mat3D:
-        print(line[0])
+        #print(line[0])
         ax.scatter(line[0],line[1],line[2],c='b',marker='o')
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
