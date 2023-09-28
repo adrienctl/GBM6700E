@@ -45,6 +45,23 @@ def compute_camera_parameters(mat2D,mat3D,nb_beads=np.inf):
         M[int(i/4)][i%4] = L[i][0]
     return M
 
+def select_beads(mat2D,mat3D,beads_list):
+    """
+    input: mat2D : image 2D des beads, mat3D : coordonnes 3D des beads, beads_list : ['A_1_5','B_5_5',...]
+    """
+    mat2D_selected = []
+    mat3D_selected = []
+    for line2D in mat2D:
+        for line3D in mat3D:
+            if line2D[0]==line3D[0]:
+                if line2D[0] in beads_list:
+                    mat2D_selected.append(line2D)
+                    mat3D_selected.append(line3D)
+    return mat2D_selected,mat3D_selected
+
+
+
+
 def print_parameters(M):
     L = M.flatten()
     L1,L2,L3,L4,L5,L6,L7,L8,L9,L10,L11 = L[0],L[1],L[2],L[3],L[4],L[5],L[6],L[7],L[8],L[9],L[10]

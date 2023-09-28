@@ -7,7 +7,7 @@ def reconstruction_one_point(param_P0, param_P20, coord_P0,coord_P20):
     param_P20 = np.array(param_P20).flatten()
     A = []
     B = []
-    """
+    
     #Ici on a fait le rapport, on utilise pas certains param, je pense qu'on perd de l'info
     A.append([coord_P0[0]*param_P0[4]-coord_P0[1]*param_P0[0],
             coord_P0[0]*param_P0[5]-coord_P0[1]*param_P0[1],
@@ -17,7 +17,7 @@ def reconstruction_one_point(param_P0, param_P20, coord_P0,coord_P20):
             coord_P20[0]*param_P20[5]-coord_P20[1]*param_P20[1],
             coord_P20[0]*param_P20[6]-coord_P20[1]*param_P20[2]])
     B.append([param_P20[3]*coord_P20[1]-param_P20[7]*coord_P20[0]])
-    """
+    
     
     A.append([param_P0[8]*(coord_P0[0]+coord_P0[1])-param_P0[1]-param_P0[4],
               param_P0[9]*(coord_P0[0]+coord_P0[1])-param_P0[2]-param_P0[5],
