@@ -1,14 +1,18 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_3D_points(mat3D_vert,mat3D_beads,name,selected_beads = []):
+def plot_3D_points(mat3D_vert,mat3D_beads,name,config):
+
     fig = plt.figure(name)
     ax = fig.add_subplot(111, projection='3d')
     for line in mat3D_vert:
         #print(line[0])
         ax.scatter(line[0],line[1],line[2],c='b',marker='o')
     for line in mat3D_beads:
-        ax.scatter(line[0],line[1],line[2],c='r',marker='o')
+        if config!=None and line[0] in config:
+            ax.scatter(line[1][0][0],line[1][0][1],line[1][0][2],c='g',marker='o')
+        else :
+            ax.scatter(line[1][0][0],line[1][0][1],line[1][0][2],c='r',marker='o')
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')

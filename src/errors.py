@@ -19,7 +19,19 @@ def RMS(test, groundtruth, nb_dim=3):
         ZGT = groundtruth.T[2]
         return np.sqrt(np.sum((Ztest-ZGT)**2)/len(Ztest))
     else:
-        return np.sqrt(np.sum((test-groundtruth)**2)/len(test)) #TODO:  à verifier
+        return np.sqrt(np.sum((test-groundtruth)**2)/len(test))
+    
 
+
+
+def dist_to_bary(beads3D_selected, vert_3D):
+    errors = []
+    dist = []
+    bary_beads = np.mean(beads3D_selected, axis=0)
+    for i in range(len(vert_3D)):
+        dist.append(np.norm(vert_3D[i] - bary_beads))
+        errors.append(np.norm(vert_3D[i] - bary_beads))
+
+    
     
     
