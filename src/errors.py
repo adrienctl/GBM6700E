@@ -24,7 +24,7 @@ def RMS(test, groundtruth, nb_dim=3):
 
 
 
-def dist_to_bary(beads3D_selected, vert_3D):
+def dist_to_bary(beads3D_selected, vert_3D, vert_3D_groundtruth):
     errors = []
     dist = []
     bary_beads = np.mean(beads3D_selected, axis=0)

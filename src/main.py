@@ -16,7 +16,7 @@ config_5 = ["A_1_1","A_5_1","A_1_6","A_5_6","A_2_3","A_4_3","A_2_4","A_4_4"]
 config_6 = ["B_2_2","B_4_2","B_2_4","B_4_4","B_1_1","B_5_1","B_1_5","B_5_5"]
 config_0 = None
 
-CONFIG = config_0
+CONFIG = config_1
 
 def create_RMS_curve():
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
@@ -35,7 +35,7 @@ def create_RMS_curve():
     RMS_Z = []
     RMS_3D = []
 
-    abs = np.arange(4,50,1)
+    abs = np.arange(6,51,1)
 
     for nb_beads in abs:
         param_camera_PA0 = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib,nb_beads)
@@ -51,6 +51,7 @@ def create_RMS_curve():
     plt.plot(abs,RMS_Z,label="RMS Z",color="blue", linestyle=':')
     plt.plot(abs,RMS_3D,label="RMS 3D",color="black", linestyle='solid')
     plt.legend()
+    
     plt.show()
 
 def main():
@@ -83,7 +84,7 @@ def main():
     fin_reconstr_time = time.time()
     print("Fin de la reconstruction 3D, éxécutée en {0:.2f} secondes.\n".format(fin_reconstr_time-fin_calib_time))
 
-    affichage.plot_3D_points(vert_3D,Beads3D_calib,"Vertebrae reconstruction",CONFIG)
+    affichage.plot_3D_points(vert_3D, vert_3D_groundtruth,Beads3D_calib,"Vertebrae reconstruction",CONFIG)
     end_display_time = time.time()
 
     print("Utilisation de l'affichage pendant {0:.2f} secondes.\n".format(end_display_time-fin_reconstr_time))
