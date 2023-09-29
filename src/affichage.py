@@ -21,6 +21,7 @@ def plot_3D_points(mat3D_vert, mat3D_vert_groundtruth,mat3D_beads,name,config):
     ax.set_xlim(-max_range, max_range)
     ax.set_ylim(-max_range, max_range)
     ax.set_zlim(-max_range, max_range)
+    ax.grid(False)
     #manager = plt.get_current_fig_manager() # Pour mettre la fenêtre en plein écran
     #manager.full_screen_toggle()
     plt.legend()

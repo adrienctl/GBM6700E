@@ -43,21 +43,3 @@ def reconstruction_vertebrae(param_P0, param_P20,mat2D_P0,mat2D_P20):
                     R.append(reconstruction_one_point(param_P0, param_P20,pts_P0,pts_P20))
     return np.array(R)
 
-
-
-
-
-
-
-def reconstruction_all_beads_old(mat2D, M):
-    R = []
-    for coord2D in mat2D:
-        R.append(reconstruction_one_point([coord2D[1][0][0],coord2D[1][0][1],1],M))
-    return np.array(R)
-
-def reconstruction_vertebrae_old(mat2D,M):
-    L = []
-    for vertebre in mat2D:
-        for point in vertebre[0][1][0]:
-            L.append(reconstruction_one_point([point[1][0][0],point[1][0][1],1],M))
-    return np.array(L)

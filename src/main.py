@@ -54,8 +54,6 @@ def create_RMS_curve():
     plt.ylabel("RMS")
     plt.title("RMS en fonction du nombre de beads utilisés")
     plt.legend()
-    
-    #plt.show()
 
 def main():
     print("### Début de la calibration des cameras ###\n")

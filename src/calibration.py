@@ -29,14 +29,6 @@ def create_equations(mat2D,mat3D,nb_beads=np.inf):
 
     
 
-def common_beads(mat2D_PA0, mat2d_PA20):
-    common_beads_list=[]
-    for line0 in mat2D_PA0:
-        for line20 in mat2d_PA20:
-            if line0[0]==line20[0]:
-                common_beads_list.append(line0[0])
-    return common_beads_list
-
 def compute_camera_parameters(mat2D,mat3D,nb_beads=np.inf):
     """
     input: mat2D : image 2D des beads, mat3D : coordonnes 3D des beads
