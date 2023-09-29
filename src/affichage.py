@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import errors
 
 def plot_3D_points(mat3D_vert, mat3D_vert_groundtruth,mat3D_beads,name,config):
-
     fig = plt.figure(name)
     ax = fig.add_subplot(111, projection='3d')
     X,Y,Z = mat3D_vert.T[0],mat3D_vert.T[1],mat3D_vert.T[2]
@@ -21,7 +21,16 @@ def plot_3D_points(mat3D_vert, mat3D_vert_groundtruth,mat3D_beads,name,config):
     ax.set_xlim(-max_range, max_range)
     ax.set_ylim(-max_range, max_range)
     ax.set_zlim(-max_range, max_range)
-    manager = plt.get_current_fig_manager()
-    manager.full_screen_toggle()
+    #manager = plt.get_current_fig_manager() # Pour mettre la fenêtre en plein écran
+    #manager.full_screen_toggle()
     plt.legend()
-    plt.show()
+    #plt.show()
+
+def plot_errors_bary(beads3D_selected, vert_3D, vert_3D_groundtruth):
+    plt.subplot(1,3,3)
+    dist, errors_list = errors.dist_bary_gt(beads3D_selected, vert_3D, vert_3D_groundtruth)
+    plt.plot(dist, errors_list, 'ro')
+    plt.xlabel("Distance to barycenter")
+    plt.ylabel("Error")
+    plt.title("Error depending on distance to barycenter")
+    #plt.show()

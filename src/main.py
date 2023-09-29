@@ -6,7 +6,6 @@ import errors
 import time
 import numpy as np
 import matplotlib.pyplot as plt
-import random
 
 config_1 = ["A_1_1","A_5_1","A_1_6","A_5_6","B_1_1","B_5_1","B_1_5","B_5_5"]
 config_2 = ["A_1_1","A_5_1","A_1_6","A_5_6","B_2_2","B_4_2","B_2_4","B_4_4"]
@@ -19,6 +18,7 @@ config_0 = None
 CONFIG = config_1
 
 def create_RMS_curve():
+    plt.subplot(1,3,1)
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
     Beads2D_vert_PA0, Beads2D_vert_PA20 = lecture_ecriture.load_vert_2D("data/Vertebrae2D.mat")
@@ -50,9 +50,12 @@ def create_RMS_curve():
     plt.plot(abs,RMS_Y,label="RMS Y",color="green", linestyle=':')
     plt.plot(abs,RMS_Z,label="RMS Z",color="blue", linestyle=':')
     plt.plot(abs,RMS_3D,label="RMS 3D",color="black", linestyle='solid')
+    plt.xlabel("Nombre de beads utilisés pour la calibration")
+    plt.ylabel("RMS")
+    plt.title("RMS en fonction du nombre de beads utilisés")
     plt.legend()
     
-    plt.show()
+    #plt.show()
 
 def main():
     print("### Début de la calibration des cameras ###\n")
@@ -90,8 +93,13 @@ def main():
     print("Utilisation de l'affichage pendant {0:.2f} secondes.\n".format(end_display_time-fin_reconstr_time))
 
     create_RMS_curve()
+    affichage.plot_errors_bary(Beads3D_calib_selected, vert_3D, vert_3D_groundtruth)
 
     print("Fin du programme.")
+    manager = plt.get_current_fig_manager() # Pour mettre la fenêtre en plein écran
+    manager.full_screen_toggle()
+    
+    plt.show()
 
 
 if __name__ == "__main__":

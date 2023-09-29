@@ -24,13 +24,18 @@ def RMS(test, groundtruth, nb_dim=3):
 
 
 
-def dist_to_bary(beads3D_selected, vert_3D, vert_3D_groundtruth):
-    errors = []
+def dist_bary_gt(beads3D_selected, vert_3D, vert_3D_groundtruth):
     dist = []
-    bary_beads = np.mean(beads3D_selected, axis=0)
+    errors_list = []
+    bead_list = []
+    for i in range(len(beads3D_selected)):
+        bead_list.append(beads3D_selected[i][1][0])
+    bary_beads = np.mean(bead_list, axis=0)
     for i in range(len(vert_3D)):
-        dist.append(np.norm(vert_3D[i] - bary_beads))
-        errors.append(np.norm(vert_3D[i] - bary_beads))
+        dist.append(np.linalg.norm(vert_3D[i] - bary_beads))
+        errors_list.append(np.linalg.norm(vert_3D[i] - vert_3D_groundtruth[i]))
+    return dist, errors_list
+
 
     
     
