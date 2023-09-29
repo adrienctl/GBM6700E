@@ -11,15 +11,16 @@ def create_equations(mat2D,mat3D,nb_beads=np.inf):
                     X,Y,Z = line3D[1][0][0],line3D[1][0][1],line3D[1][0][2]
                     u,v = line2D[1][0][0],line2D[1][0][1]
                     """
-                    A.append([X,Y,Z,1,0,0,0,0,-u*X,-u*Y,-u*Z])
-                    B.append([u])
-                    A.append([0,0,0,0,X,Y,Z,1,-v*X,-v*Y,-v*Z])
-                    B.append([v])
-                    """
                     A.append([-X,-Y,-Z,-1,-X,-Y,-Z,-1,X*(u+v),Y*(u+v),Z*(u+v)])
                     B.append([-u-v])
                     A.append([-X,-Y,-Z,-1,X,Y,Z,1,X*(u-v),Y*(u-v),Z*(u-v)])
                     B.append([-u+v])
+                    """
+                    A.append([X,Y,Z,1,0,0,0,0,-u*X,-u*Y,-u*Z])
+                    B.append([u])
+                    A.append([0,0,0,0,X,Y,Z,1,-v*X,-v*Y,-v*Z])
+                    B.append([v])
+                    
                     nb+=1
     print("Nombre de beads utilisés pour la calibration : "+str(nb))
     return np.array(A),np.array(B)

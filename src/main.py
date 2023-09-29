@@ -46,7 +46,7 @@ def main():
     print("### Début de la calibration des cameras ###\n")
     start_time = time.time()
 
-    nb_beads_calibration_max = 17
+    nb_beads_calibration_max = 50
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
     param_camera_PA0 = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib,nb_beads_calibration_max)
