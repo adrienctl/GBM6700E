@@ -7,6 +7,8 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 
+config_1 = ["A_1_1","A_5_1","A_1_6","A_5_6","B_1_1","B_5_1","B_1_5","B_5_5"]
+
 def create_RMS_curve():
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
@@ -24,7 +26,7 @@ def create_RMS_curve():
     RMS_Z = []
     RMS_3D = []
 
-    abs = np.arange(1,50,1)
+    abs = np.arange(4,50,1)
 
     for nb_beads in abs:
         param_camera_PA0 = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib,nb_beads)
@@ -49,8 +51,8 @@ def main():
     nb_beads_calibration_max = 50
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
-    param_camera_PA0 = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib,nb_beads_calibration_max)
-    param_camera_PA20 = calibration.compute_camera_parameters(Beads2D_calib_PA20,Beads3D_calib,nb_beads_calibration_max)
+    param_camera_PA0 = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib,nb_beads_calibration_max,config_1)
+    param_camera_PA20 = calibration.compute_camera_parameters(Beads2D_calib_PA20,Beads3D_calib,nb_beads_calibration_max,config_1)
 
     print("\nParamètres de la caméra PA0 :")
     calibration.print_parameters(param_camera_PA0)
@@ -65,8 +67,7 @@ def main():
     calib_3D_test = reconstruction.reconstruction_all_beads(param_camera_PA0,param_camera_PA20,Beads2D_calib_PA0,Beads2D_calib_PA20)
     fin_reconstr_time = time.time()
     print("Fin de la reconstruction 3D, éxécutée en {0:.2f} secondes.\n".format(fin_reconstr_time-fin_calib_time))
-    affichage.plot_3D_points(vert_3D,"Vertebrae reconstruction")
-    affichage.plot_3D_points(calib_3D_test,"Beads reconstruction")
+    affichage.plot_3D_points(vert_3D,calib_3D_test,"Vertebrae reconstruction",config_1)
     end_display_time = time.time()
 
     print("Utilisation de l'affichage pendant {0:.2f} secondes.\n".format(end_display_time-fin_reconstr_time))

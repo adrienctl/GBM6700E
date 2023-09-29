@@ -1,29 +1,46 @@
 import numpy as np
+import random
 
-def create_equations(mat2D,mat3D,nb_beads=np.inf):
+def create_equations(mat2D,mat3D,nb_beads=np.inf, selected_beads = []):
     A = []
     B = []
     nb = 0
-    for line3D in mat3D:
+
+    random_ind = list(range(len(mat3D)))
+    random.shuffle(random_ind)
+    random_mat3D = [mat3D[i] for i in random_ind]
+
+    random_beads = True
+    if len(selected_beads)>0:
+        random_beads = False
+    
+
+    #mat2D,mat3D = np.random.shuffle(mat2D),np.random.shuffle(mat3D)
+    for line3D in random_mat3D:
         for line2D in mat2D:
-            if line2D[0]==line3D[0]:
-                if nb<nb_beads:
-                    X,Y,Z = line3D[1][0][0],line3D[1][0][1],line3D[1][0][2]
-                    u,v = line2D[1][0][0],line2D[1][0][1]
-                    """
-                    A.append([-X,-Y,-Z,-1,-X,-Y,-Z,-1,X*(u+v),Y*(u+v),Z*(u+v)])
-                    B.append([-u-v])
-                    A.append([-X,-Y,-Z,-1,X,Y,Z,1,X*(u-v),Y*(u-v),Z*(u-v)])
-                    B.append([-u+v])
-                    """
-                    A.append([X,Y,Z,1,0,0,0,0,-u*X,-u*Y,-u*Z])
-                    B.append([u])
-                    A.append([0,0,0,0,X,Y,Z,1,-v*X,-v*Y,-v*Z])
-                    B.append([v])
-                    
-                    nb+=1
-    print("Nombre de beads utilisés pour la calibration : "+str(nb))
+            if random_beads : 
+                if line2D[0]==line3D[0]:
+                    if nb<nb_beads:
+                        X,Y,Z = line3D[1][0][0],line3D[1][0][1],line3D[1][0][2]
+                        u,v = line2D[1][0][0],line2D[1][0][1]
+                        A.append([X,Y,Z,1,0,0,0,0,-u*X,-u*Y,-u*Z])
+                        B.append([u])
+                        A.append([0,0,0,0,X,Y,Z,1,-v*X,-v*Y,-v*Z])
+                        B.append([v])
+                        nb+=1
+            else:
+                if line2D[0]==line3D[0] and line3D[0] in selected_beads:
+                    if nb<nb_beads:
+                        X,Y,Z = line3D[1][0][0],line3D[1][0][1],line3D[1][0][2]
+                        u,v = line2D[1][0][0],line2D[1][0][1]
+                        A.append([X,Y,Z,1,0,0,0,0,-u*X,-u*Y,-u*Z])
+                        B.append([u])
+                        A.append([0,0,0,0,X,Y,Z,1,-v*X,-v*Y,-v*Z])
+                        B.append([v])
+                        nb+=1
     return np.array(A),np.array(B)
+
+
     
 
 def common_beads(mat2D_PA0, mat2d_PA20):
@@ -34,7 +51,7 @@ def common_beads(mat2D_PA0, mat2d_PA20):
                 common_beads_list.append(line0[0])
     return common_beads_list
 
-def compute_camera_parameters(mat2D,mat3D,nb_beads=np.inf):
+def compute_camera_parameters(mat2D,mat3D,nb_beads=np.inf, selected_beads = []):
     """
     input: mat2D : image 2D des beads, mat3D : coordonnes 3D des beads
     output: M : matrice de paramètres de la caméra (contenant 11 paramètres intrasèques ou extrasèques)
