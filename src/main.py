@@ -7,15 +7,15 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 
-config_1 = ["A_1_1","A_5_1","A_1_6","A_5_6","B_1_1","B_5_1","B_1_5","B_5_5"]
-config_2 = ["A_1_1","A_5_1","A_1_6","A_5_6","B_2_2","B_4_2","B_2_4","B_4_4"]
-config_3 = ["A_2_3","A_4_3","A_2_4","A_4_4","B_2_2","B_4_2","B_2_4","B_4_4"]
-config_4 = ["A_1_1","A_2_1","A_1_2","A_2_2","B_4_5","B_5_4","B_4_4","B_5_5"]
-config_5 = ["A_1_1","A_5_1","A_1_6","A_5_6","A_2_3","A_4_3","A_2_4","A_4_4"]
-config_6 = ["B_2_2","B_4_2","B_2_4","B_4_4","B_1_1","B_5_1","B_1_5","B_5_5"]
-config_0 = None
+config_1 = [["A_1_1","A_5_1","A_1_6","A_5_6","B_1_1","B_5_1","B_1_5","B_5_5"],"Config 1"]
+config_2 = [["A_1_1","A_5_1","A_1_6","A_5_6","B_2_2","B_4_2","B_2_4","B_4_4"],"Config 2"]
+config_3 = [["A_2_3","A_4_3","A_2_4","A_4_4","B_2_2","B_4_2","B_2_4","B_4_4"],"Config 3"]
+config_4 = [["A_1_1","A_2_1","A_1_2","A_2_2","B_4_5","B_5_4","B_4_4","B_5_5"],"Config 4"]
+config_5 = [["A_1_1","A_5_1","A_1_6","A_5_6","A_2_3","A_4_3","A_2_4","A_4_4"],"Config 5"]
+config_6 = [["B_2_2","B_4_2","B_2_4","B_4_4","B_1_1","B_5_1","B_1_5","B_5_5"],"Config 6"]
+config_0 = [[None],"All beads"]
 
-CONFIG = config_1
+CONFIG = config_2
 
 def create_RMS_curve():
     plt.subplot(1,3,1)
@@ -59,15 +59,15 @@ def main():
     print("### Début de la calibration des cameras ###\n")
     start_time = time.time()
 
-    nb_beads_calibration_max = 50
+    nb_beads_calibration_max = 54
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
-    Beads3D_calib_selected = calibration.select_config_beads(Beads3D_calib,CONFIG)
+    Beads3D_calib_selected = calibration.select_config_beads(Beads3D_calib,CONFIG[0])
 
     param_camera_PA0 = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib_selected,nb_beads_calibration_max)
     param_camera_PA20 = calibration.compute_camera_parameters(Beads2D_calib_PA20,Beads3D_calib_selected,nb_beads_calibration_max)
-    param_camera_PA0_groundtruth = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib,50)
-    param_camera_PA20_groundtruth = calibration.compute_camera_parameters(Beads2D_calib_PA20,Beads3D_calib,50)
+    param_camera_PA0_groundtruth = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib)
+    param_camera_PA20_groundtruth = calibration.compute_camera_parameters(Beads2D_calib_PA20,Beads3D_calib)
 
     print("\nParamètres de la caméra PA0 :")
     calibration.print_parameters(param_camera_PA0)
@@ -85,7 +85,7 @@ def main():
     fin_reconstr_time = time.time()
     print("Fin de la reconstruction 3D, éxécutée en {0:.2f} secondes.\n".format(fin_reconstr_time-fin_calib_time))
 
-    affichage.plot_3D_points(vert_3D, vert_3D_groundtruth,Beads3D_calib,"Vertebrae reconstruction",CONFIG)
+    affichage.plot_3D_points(vert_3D, vert_3D_groundtruth,Beads3D_calib,"Vertebrae reconstruction with "+CONFIG[1],CONFIG[0])
     end_display_time = time.time()
 
     print("Utilisation de l'affichage pendant {0:.2f} secondes.\n".format(end_display_time-fin_reconstr_time))

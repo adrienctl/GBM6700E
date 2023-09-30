@@ -17,10 +17,10 @@ def plot_3D_points(mat3D_vert, mat3D_vert_groundtruth,mat3D_beads,name,config):
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
-    max_range = np.array([mat3D_vert[:,0].max()-mat3D_vert[:,0].min(), mat3D_vert[:,1].max()-mat3D_vert[:,1].min(), mat3D_vert[:,2].max()-mat3D_vert[:,2].min()]).max() /1.5
-    ax.set_xlim(-max_range, max_range)
-    ax.set_ylim(-max_range, max_range)
-    ax.set_zlim(-max_range, max_range)
+    ax.set_title(name)
+    ax.set_xlim(-600, 0)
+    ax.set_ylim(-300, 300)
+    ax.set_zlim(-300, 300)
     ax.grid(False)
     #manager = plt.get_current_fig_manager() # Pour mettre la fenêtre en plein écran
     #manager.full_screen_toggle()

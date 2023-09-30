@@ -25,6 +25,7 @@ def RMS(test, groundtruth, nb_dim=3):
 
 
 def dist_bary_gt(beads3D_selected, vert_3D, vert_3D_groundtruth):
+    #il faut faire ça pour les 3 axes
     dist = []
     errors_list = []
     bead_list = []

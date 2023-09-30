@@ -14,15 +14,14 @@ def create_equations(mat2D,mat3D,nb_beads=np.inf):
     #mat2D,mat3D = np.random.shuffle(mat2D),np.random.shuffle(mat3D)
     for line3D in random_mat3D:
         for line2D in mat2D:
-            if line2D[0]==line3D[0]:
-                if nb<nb_beads:
-                    X,Y,Z = line3D[1][0][0],line3D[1][0][1],line3D[1][0][2]
-                    u,v = line2D[1][0][0],line2D[1][0][1]
-                    A.append([X,Y,Z,1,0,0,0,0,-u*X,-u*Y,-u*Z])
-                    B.append([u])
-                    A.append([0,0,0,0,X,Y,Z,1,-v*X,-v*Y,-v*Z])
-                    B.append([v])
-                    nb+=1
+            if line2D[0]==line3D[0] and nb<nb_beads:
+                X,Y,Z = line3D[1][0][0],line3D[1][0][1],line3D[1][0][2]
+                u,v = line2D[1][0][0],line2D[1][0][1]
+                A.append([X,Y,Z,1,0,0,0,0,-u*X,-u*Y,-u*Z])
+                B.append([u])
+                A.append([0,0,0,0,X,Y,Z,1,-v*X,-v*Y,-v*Z])
+                B.append([v])
+                nb+=1
 
     return np.array(A),np.array(B)
 
@@ -59,6 +58,7 @@ def select_config_beads(mat3D,config):
 
 def print_parameters(M):
     L = M.flatten()
+    print("L =",L)
     L1,L2,L3,L4,L5,L6,L7,L8,L9,L10,L11 = L[0],L[1],L[2],L[3],L[4],L[5],L[6],L[7],L[8],L[9],L[10]
     d = -1/(L9**2+L10**2+L11**2)**0.5
     u0 = d**2*(L1*L9+L2*L10+L3*L11)
