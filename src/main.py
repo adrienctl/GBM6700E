@@ -13,9 +13,9 @@ config_3 = [["A_2_3","A_4_3","A_2_4","A_4_4","B_2_2","B_4_2","B_2_4","B_4_4"],"C
 config_4 = [["A_1_1","A_2_1","A_1_2","A_2_2","B_4_5","B_5_4","B_4_4","B_5_5"],"Config 4"]
 config_5 = [["A_1_1","A_5_1","A_1_6","A_5_6","A_2_3","A_4_3","A_2_4","A_4_4"],"Config 5"]
 config_6 = [["B_2_2","B_4_2","B_2_4","B_4_4","B_1_1","B_5_1","B_1_5","B_5_5"],"Config 6"]
-config_0 = [[None],"All beads"]
+config_0 = [None,"All beads"]
 
-CONFIG = config_2
+CONFIG = config_1
 
 def create_RMS_curve():
     plt.subplot(1,3,1)
@@ -27,8 +27,6 @@ def create_RMS_curve():
     param_camera_PA0 = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib,50)
     param_camera_PA20 = calibration.compute_camera_parameters(Beads2D_calib_PA20,Beads3D_calib,50)
     vert_3D_groundtruth = reconstruction.reconstruction_vertebrae(param_camera_PA0,param_camera_PA20,Beads2D_vert_PA0,Beads2D_vert_PA20)
-
-    print(vert_3D_groundtruth.shape)
 
     RMS_X = []
     RMS_Y = []

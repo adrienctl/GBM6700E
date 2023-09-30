@@ -50,7 +50,6 @@ def select_config_beads(mat3D,config):
     if config==None:
         return mat3D
     for line3D in mat3D:
-        print(line3D)
         if line3D[0] in config:
             mat3D_selected.append(line3D)
     return mat3D_selected
