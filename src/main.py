@@ -15,10 +15,10 @@ config_5 = [["A_1_1","A_5_1","A_1_6","A_5_6","A_2_3","A_4_3","A_2_4","A_4_4"],"C
 config_6 = [["B_2_2","B_4_2","B_2_4","B_4_4","B_1_1","B_5_1","B_1_5","B_5_5"],"Config 6"]
 config_0 = [None,"All beads"]
 
-CONFIG = config_0
+CONFIG = config_1
 
 def create_RMS_curve():
-    plt.subplot(2,4,1)
+    plt.subplot(3,4,1)
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
     Beads2D_vert_PA0, Beads2D_vert_PA20 = lecture_ecriture.load_vert_2D("data/Vertebrae2D.mat")
@@ -54,19 +54,24 @@ def create_RMS_curve():
     plt.legend()
 
 def create_2D_noise_curve():
-    plt.subplot(2,4,5)
+    plt.subplot(3,4,5)
+    Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
+    Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
+    Beads2D_vert_PA0, Beads2D_vert_PA20 = lecture_ecriture.load_vert_2D("data/Vertebrae2D.mat")
+    # calcul du groundtruth
+    param_camera_PA0 = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib)
+    param_camera_PA20 = calibration.compute_camera_parameters(Beads2D_calib_PA20,Beads3D_calib)
+    vert_3D_groundtruth = reconstruction.reconstruction_vertebrae(param_camera_PA0,param_camera_PA20,Beads2D_vert_PA0,Beads2D_vert_PA20)
 
     for sigma in np.linspace(0,0.1,10):
-        Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
-        Beads2D_calib_PA0, Beads2D_calib_PA20 = calibration.add_2D_gaussian_noise(Beads2D_calib_PA0,sigma), calibration.add_2D_gaussian_noise(Beads2D_calib_PA20,sigma)
-        Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
-        Beads2D_vert_PA0, Beads2D_vert_PA20 = lecture_ecriture.load_vert_2D("data/Vertebrae2D.mat")
-
-        # calcul du groundtruth
-        param_camera_PA0 = calibration.compute_camera_parameters(Beads2D_calib_PA0,Beads3D_calib)
-        param_camera_PA20 = calibration.compute_camera_parameters(Beads2D_calib_PA20,Beads3D_calib)
+        Beads2D_calib_PA0_noise, Beads2D_calib_PA20_noise = calibration.add_2D_gaussian_noise(Beads2D_calib_PA0,sigma), calibration.add_2D_gaussian_noise(Beads2D_calib_PA20,sigma)
+        param_camera_PA0 = calibration.compute_camera_parameters(Beads2D_calib_PA0_noise,Beads3D_calib)
+        param_camera_PA20 = calibration.compute_camera_parameters(Beads2D_calib_PA20_noise,Beads3D_calib)
         vert_3D_groundtruth = reconstruction.reconstruction_vertebrae(param_camera_PA0,param_camera_PA20,Beads2D_vert_PA0,Beads2D_vert_PA20)
 
+        
+
+      
         RMS_X = []
         RMS_Y = []
         RMS_Z = []
@@ -92,7 +97,7 @@ def create_2D_noise_curve():
     plt.legend()
 
 def create_3D_noise_curve():
-    plt.subplot(2,4,8)
+    plt.subplot(3,4,8)
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
 
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
@@ -164,8 +169,8 @@ def main():
     print("Utilisation de l'affichage pendant {0:.2f} secondes.\n".format(end_display_time-fin_reconstr_time))
 
     create_RMS_curve()
-    create_2D_noise_curve()
-    create_3D_noise_curve()
+    #create_2D_noise_curve()
+    #create_3D_noise_curve()
     affichage.plot_errors_bary(Beads3D_calib_selected, vert_3D, vert_3D_groundtruth)
 
     print("Fin du programme.")
