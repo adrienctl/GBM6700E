@@ -28,7 +28,7 @@ def plot_3D_points(mat3D_vert, mat3D_vert_groundtruth,mat3D_beads,name,config):
     #plt.show()
 
 def plot_errors_bary(beads3D_selected, vert_3D, vert_3D_groundtruth):
-    plt.subplot(1,3,3)
+    plt.subplot(2,4,4)
     dist, errors_list = errors.dist_bary_gt(beads3D_selected, vert_3D, vert_3D_groundtruth)
     plt.plot(dist, errors_list, 'ro')
     plt.xlabel("Distance to barycenter")

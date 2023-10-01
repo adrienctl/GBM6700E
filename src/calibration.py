@@ -87,3 +87,8 @@ def print_parameters(M):
     print("Matrice de rotation R :", R)
     print("____________________________________________________________________________\n")
 
+def add_2D_gaussian_noise(mat2D,sigma):
+    for i in range(len(mat2D)):
+        mat2D[i][1][0][0] += np.random.normal(0,sigma)
+        mat2D[i][1][0][1] += np.random.normal(0,sigma)
+    return mat2D
