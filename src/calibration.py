@@ -92,3 +92,10 @@ def add_2D_gaussian_noise(mat2D,sigma):
         mat2D[i][1][0][0] += np.random.normal(0,sigma)
         mat2D[i][1][0][1] += np.random.normal(0,sigma)
     return mat2D
+
+def add_3D_gaussian_noise(mat3D,sigma):
+    for i in range(len(mat3D)):
+        mat3D[i][1][0][0] += np.random.normal(0,sigma)
+        mat3D[i][1][0][1] += np.random.normal(0,sigma)
+        mat3D[i][1][0][2] += np.random.normal(0,sigma)
+    return mat3D
