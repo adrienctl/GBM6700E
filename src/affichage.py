@@ -10,8 +10,9 @@ def plot_3D_points(mat3D_vert, mat3D_vert_groundtruth,mat3D_beads,name,config,SU
     ax = fig.add_subplot(111, projection='3d')
     X,Y,Z = mat3D_vert.T[0],mat3D_vert.T[1],mat3D_vert.T[2]
     ax.scatter(X,Y,Z,label = "Vertebrae reconstruction",c='b',marker='o')
-    X,Y,Z = mat3D_vert_groundtruth.T[0],mat3D_vert_groundtruth.T[1],mat3D_vert_groundtruth.T[2]
-    ax.scatter(X,Y,Z,label = "Groundtruth vertebrae reconstruction",c='b',marker='+',alpha=0.25)
+    if config!=None :
+        X,Y,Z = mat3D_vert_groundtruth.T[0],mat3D_vert_groundtruth.T[1],mat3D_vert_groundtruth.T[2]
+        ax.scatter(X,Y,Z,label = "Groundtruth vertebrae reconstruction",c='b',marker='+',alpha=0.25)
     disp_label = True
     for line in mat3D_beads:
         if config!=None and line[0] in config:
