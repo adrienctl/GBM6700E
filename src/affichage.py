@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import errors
 
-def plot_3D_points(mat3D_vert, mat3D_vert_groundtruth,mat3D_beads,name,config):
+def plot_3D_points(mat3D_vert, mat3D_vert_groundtruth,mat3D_beads,name,config,SUBPLOT):
     fig = plt.figure(name)
     ax = fig.add_subplot(111, projection='3d')
     X,Y,Z = mat3D_vert.T[0],mat3D_vert.T[1],mat3D_vert.T[2]
@@ -25,10 +25,11 @@ def plot_3D_points(mat3D_vert, mat3D_vert_groundtruth,mat3D_beads,name,config):
     #manager = plt.get_current_fig_manager() # Pour mettre la fenêtre en plein écran
     #manager.full_screen_toggle()
     plt.legend()
+    if not SUBPLOT : plt.show()
     #plt.show()
 
-def plot_errors_bary(beads3D_selected, vert_3D, vert_3D_groundtruth):
-    plt.subplot(3,4,4)
+def plot_errors_bary(beads3D_selected, vert_3D, vert_3D_groundtruth,SUBPLOT):
+    if SUBPLOT : plt.subplot(3,4,4)
     dist, errors_list_3D, errors_list_X, errors_list_Y, errors_list_Z = errors.dist_bary_gt(beads3D_selected, vert_3D, vert_3D_groundtruth)
     plt.scatter(dist, errors_list_3D, label="3D error",s=3)
     plt.scatter(dist, errors_list_X, label="X error",s=3)
@@ -38,4 +39,5 @@ def plot_errors_bary(beads3D_selected, vert_3D, vert_3D_groundtruth):
     plt.ylabel("Error")
     plt.title("Error depending on distance to barycenter")
     plt.legend()
+    if not SUBPLOT : plt.show()
     #plt.show()

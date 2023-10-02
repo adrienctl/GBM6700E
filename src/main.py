@@ -16,9 +16,10 @@ config_6 = [["B_2_2","B_4_2","B_2_4","B_4_4","B_1_1","B_5_1","B_1_5","B_5_5"],"C
 config_0 = [None,"All beads"]
 
 CONFIG = config_1
+SUBPLOT = False # pour faire des plots individuels pour le rapport
 
 def create_RMS_curve():
-    plt.subplot(3,4,1)
+    if SUBPLOT : plt.subplot(3,4,1)
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
     Beads2D_vert_PA0, Beads2D_vert_PA20 = lecture_ecriture.load_vert_2D("data/Vertebrae2D.mat")
@@ -52,11 +53,12 @@ def create_RMS_curve():
     plt.ylabel("RMS")
     plt.title("RMS en fonction du nombre de beads utilisés")
     plt.legend()
+    if not SUBPLOT : plt.show()
 
 def create_2D_noise_curve():
     sigma_max = 0.5
 
-    plt.subplot(3,4,5)
+    if SUBPLOT : plt.subplot(3,4,5)
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
     Beads2D_vert_PA0, Beads2D_vert_PA20 = lecture_ecriture.load_vert_2D("data/Vertebrae2D.mat")
@@ -89,10 +91,10 @@ def create_2D_noise_curve():
     plt.ylabel("Error")
     plt.title("Effect of noise on 2D points on reconstruction")
     plt.legend()
-
+    if not SUBPLOT : plt.show()
     # with 8 beads 
 
-    plt.subplot(3,4,9)
+    if SUBPLOT : plt.subplot(3,4,9)
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
     Beads2D_vert_PA0, Beads2D_vert_PA20 = lecture_ecriture.load_vert_2D("data/Vertebrae2D.mat")
@@ -125,11 +127,12 @@ def create_2D_noise_curve():
     plt.ylabel("Error")
     plt.title("Effect of noise on 2D with 8 beads")
     plt.legend()
+    if not SUBPLOT : plt.show()
 
 def create_3D_noise_curve():
     sigma_max = 0.5
 
-    plt.subplot(3,4,8)
+    if SUBPLOT : plt.subplot(3,4,8)
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
     Beads2D_vert_PA0, Beads2D_vert_PA20 = lecture_ecriture.load_vert_2D("data/Vertebrae2D.mat")
@@ -162,10 +165,11 @@ def create_3D_noise_curve():
     plt.ylabel("Error")
     plt.title("Effect of noise on 3D points on reconstruction")
     plt.legend()
+    if not SUBPLOT : plt.show()
 
     #with 8 beads
 
-    plt.subplot(3,4,12)
+    if SUBPLOT : plt.subplot(3,4,12)
     Beads2D_calib_PA0, Beads2D_calib_PA20 = lecture_ecriture.load_calib_2D("data/Calib_Beads2D.mat")
     Beads3D_calib = lecture_ecriture.load_calib_3D("data/Calib_Beads3D.mat")
     Beads2D_vert_PA0, Beads2D_vert_PA20 = lecture_ecriture.load_vert_2D("data/Vertebrae2D.mat")
@@ -198,6 +202,7 @@ def create_3D_noise_curve():
     plt.ylabel("Error")
     plt.title("Effect of noise on 3D with 8 beads")
     plt.legend()
+    if not SUBPLOT : plt.show()
 
 def main():
     print("### Début de la calibration des cameras ###\n")
@@ -229,7 +234,7 @@ def main():
     fin_reconstr_time = time.time()
     print("Fin de la reconstruction 3D, éxécutée en {0:.2f} secondes.\n".format(fin_reconstr_time-fin_calib_time))
 
-    affichage.plot_3D_points(vert_3D, vert_3D_groundtruth,Beads3D_calib,"Vertebrae reconstruction with "+CONFIG[1],CONFIG[0])
+    affichage.plot_3D_points(vert_3D, vert_3D_groundtruth,Beads3D_calib,"Vertebrae reconstruction with "+CONFIG[1],CONFIG[0],SUBPLOT)
     end_display_time = time.time()
 
     print("Utilisation de l'affichage pendant {0:.2f} secondes.\n".format(end_display_time-fin_reconstr_time))
@@ -237,13 +242,14 @@ def main():
     create_RMS_curve()
     create_2D_noise_curve()
     create_3D_noise_curve()
-    affichage.plot_errors_bary(Beads3D_calib_selected, vert_3D, vert_3D_groundtruth)
+    affichage.plot_errors_bary(Beads3D_calib_selected, vert_3D, vert_3D_groundtruth,SUBPLOT)
 
     print("Fin du programme.")
-    manager = plt.get_current_fig_manager() # Pour mettre la fenêtre en plein écran
-    manager.full_screen_toggle()
-    
-    plt.show()
+    if SUBPLOT :
+        manager = plt.get_current_fig_manager() # Pour mettre la fenêtre en plein écran
+        manager.full_screen_toggle()
+        
+        plt.show()
 
 
 if __name__ == "__main__":
