@@ -22,7 +22,6 @@ def create_equations(mat2D,mat3D,nb_beads=np.inf):
                 A.append([0,0,0,0,X,Y,Z,1,-v*X,-v*Y,-v*Z])
                 B.append([v])
                 nb+=1
-
     return np.array(A),np.array(B)
 
 
@@ -59,14 +58,14 @@ def print_parameters(M):
     L = M.flatten()
     print("L =",L)
     L1,L2,L3,L4,L5,L6,L7,L8,L9,L10,L11 = L[0],L[1],L[2],L[3],L[4],L[5],L[6],L[7],L[8],L[9],L[10]
+    Axyz = np.linalg.pinv(np.array([[L1,L2,L3],[L5,L6,L7],[L9,L10,L11]]))
+    Bxyz = np.array([-L4,-L8,-1])
+    X0,Y0,Z0 = Axyz@Bxyz
     d = -1/(L9**2+L10**2+L11**2)**0.5
     u0 = d**2*(L1*L9+L2*L10+L3*L11)
     v0 = d**2*(L5*L9+L6*L10+L7*L11)
     cu = (d**2*((u0*L9-L1)**2+(u0*L10-L2)**2+(u0*L11-L3)**2))**0.5
     cv = (d**2*((v0*L9-L5)**2+(v0*L10-L6)**2+(v0*L11-L7)**2))**0.5
-    Axyz = np.array([[L1,L2,L3],[L5,L6,L7],[L9,L10,L11]])
-    Bxyz = np.array([[-L4],[-L8],[-1]])
-    X0,Y0,Z0 = np.dot(np.linalg.inv(Axyz),Bxyz)
     R11 = (u0*L9-L1)*d/cu
     R12 = (u0*L10-L2)*d/cu
     R13 = (u0*L11-L3)*d/cu
@@ -83,7 +82,7 @@ def print_parameters(M):
     print("(u0,v0) = ({0:.2f},{1:.2f})".format(u0,v0))
     print("(cu,cv) = ({0:.2f},{1:.2f})".format(cu,cv))
     print("Paramètres extrasèques de la caméra :")
-    print("(X0,Y0,Z0) = ("+str(X0[0])+","+str(Y0[0])+","+str(Z0[0])+")")
+    print("(X0,Y0,Z0) = ("+str(X0)+","+str(Y0)+","+str(Z0)+")")
     print("Matrice de rotation R :", R)
     print("____________________________________________________________________________\n")
 

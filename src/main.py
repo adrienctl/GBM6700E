@@ -15,7 +15,7 @@ config_5 = [["A_1_1","A_5_1","A_1_6","A_5_6","A_2_3","A_4_3","A_2_4","A_4_4"],"C
 config_6 = [["B_2_2","B_4_2","B_2_4","B_4_4","B_1_1","B_5_1","B_1_5","B_5_5"],"Config 6"]
 config_0 = [None,"All beads"]
 
-CONFIG = config_1
+CONFIG = config_0
 SUBPLOT = True # pour faire des plots individuels pour le rapport
 
 def main():

@@ -8,6 +8,7 @@ import lecture_ecriture
 def plot_3D_points(mat3D_vert, mat3D_vert_groundtruth,mat3D_beads,name,config,SUBPLOT):
     fig = plt.figure(name)
     ax = fig.add_subplot(111, projection='3d')
+    ax.view_init(elev=12, azim=-45, roll=0)
     X,Y,Z = mat3D_vert.T[0],mat3D_vert.T[1],mat3D_vert.T[2]
     ax.scatter(X,Y,Z,label = "Vertebrae reconstruction",c='b',marker='o')
     if config!=None :
